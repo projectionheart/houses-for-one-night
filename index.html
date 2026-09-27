@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A pattern language of 24 patterns for alien buildings that appear at dusk, stand one night, and unlay themselves by dawn.">
+<meta property="og:title" content="Houses for One Night">
+<meta property="og:description" content="A pattern language for eerie, ephemeral buildings.">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Houses for One Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#E4E7E2; --surface:#D9DDD6; --ink:#1B2124; --muted:#58646A; --line:#B4BDBA;
+  --accent:#5B5290; --hatch:rgba(27,33,36,.13); --glow:rgba(91,82,144,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1114; --surface:#141A1E; --ink:#D5DBD5; --muted:#8A969A; --line:#29333A;
+    --accent:#ADA4DC; --hatch:rgba(213,219,213,.13); --glow:rgba(173,164,220,.16);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1114; --surface:#141A1E; --ink:#D5DBD5; --muted:#8A969A; --line:#29333A;
+  --accent:#ADA4DC; --hatch:rgba(213,219,213,.13); --glow:rgba(173,164,220,.16);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Spectral",Georgia,"Times New Roman",serif;font-size:18px;line-height:1.62;padding-inline:20px;padding-block:0 80px}
+.wrap{max-width:1060px;margin-inline:auto}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:"Italiana","Didot","Bodoni 72",Georgia,serif;font-weight:400;text-wrap:balance;margin:0}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-block:56px 32px}
+.hero h1{font-size:clamp(3rem,7.4vw,5.6rem);line-height:.95;letter-spacing:.005em;margin-block:14px 22px}
+.hero .lede{font-size:1.2rem;max-width:30ch;margin:0}
+.stage{position:relative;display:flex;flex-direction:column;gap:10px}
+#apparition{width:100%;height:440px;display:block;background:radial-gradient(ellipse at 50% 80%,var(--glow),transparent 62%)}
+.clock{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);letter-spacing:.06em;border-top:1px solid var(--line);padding-top:8px;font-variant-numeric:tabular-nums}
+
+/* preface */
+.preface{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;padding-block:32px 48px;border-top:1px solid var(--line)}
+.preface p{margin:0 0 1em;max-width:62ch}
+.key{font-size:.95rem;color:var(--muted)}
+.key dl{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;margin:12px 0 0}
+.key dt{font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--accent);letter-spacing:.1em}
+.key dd{margin:0}
+
+/* index */
+.index{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px 36px;padding-block:36px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.index h2{font-size:1.5rem;margin-block:6px 10px}
+.index ol{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:.98rem}
+.index li{display:grid;grid-template-columns:2.2em 1fr;align-items:baseline}
+.index li span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.index a{text-decoration:none}
+.index a:hover{color:var(--accent)}
+
+/* groups & patterns */
+.group-head{max-width:700px;margin-inline:auto;padding-block:88px 8px;text-align:left}
+.group-head h2{font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.05;margin-top:8px}
+.group-head p{color:var(--muted);font-style:italic;margin:12px 0 0;max-width:52ch}
+.pattern{max-width:700px;margin-inline:auto;padding-block:56px 20px;border-top:1px solid var(--line);margin-top:40px;scroll-margin-top:24px}
+.group-head + .pattern{margin-top:24px}
+.phead{display:grid;grid-template-columns:auto 1fr;gap:4px 20px;align-items:baseline}
+.pnum{font-family:"Italiana",Georgia,serif;font-size:3.4rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums;min-width:1.3em}
+.pattern h3{font-size:clamp(1.55rem,3.6vw,2.1rem);text-transform:uppercase;letter-spacing:.05em;line-height:1.15}
+.stars{font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--accent);font-size:1.1rem;letter-spacing:.08em;margin-left:.35em;white-space:nowrap;vertical-align:.35em}
+.pattern p{margin:0 0 1em}
+.context{font-style:italic;color:var(--muted);margin-top:22px!important}
+.dia{text-align:center;color:var(--muted);letter-spacing:1.1em;font-size:.8rem;margin-block:18px;padding-left:1.1em}
+.problem{font-weight:600}
+.therefore{font-weight:600}
+.therefore em{display:block;font-weight:400;font-style:italic;color:var(--muted);margin-bottom:4px}
+.connections{color:var(--muted)}
+.ref{font-variant:small-caps;letter-spacing:.03em;text-decoration:underline;text-decoration-color:var(--line);text-decoration-thickness:1px;text-underline-offset:3px}
+.ref:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.pattern:target .pnum{animation:flicker 2.4s ease-out 1}
+@keyframes flicker{0%{opacity:.1}20%{opacity:1}30%{opacity:.3}45%{opacity:1}60%{opacity:.6}100%{opacity:1}}
+
+figure.diagram{margin:28px 0 8px;padding:18px 0;border-block:1px dashed var(--line);overflow-x:auto}
+figure.diagram svg{display:block;width:100%;max-width:560px;height:auto;margin-inline:auto}
+
+/* diagram strokes */
+.dg{color:var(--ink)}
+.dg *{fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.dg .m{stroke:var(--muted);stroke-width:.9}
+.dg .a{stroke:var(--accent);stroke-width:1.5}
+.dg .d{stroke-dasharray:3 4}
+.dg .f{fill:var(--hatch);stroke:none}
+.dg .fa{fill:var(--accent);stroke:none}
+.dg .fg{fill:var(--glow);stroke:none}
+.dg .fm{fill:var(--muted);stroke:none}
+.dg text{fill:var(--muted);stroke:none;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.02em}
+.dg text.ta{fill:var(--accent)}
+
+footer{max-width:700px;margin-inline:auto;margin-top:80px;padding-top:28px;border-top:1px solid var(--line);color:var(--muted);font-size:.95rem}
+
+@media (max-width:780px){
+  body{font-size:17px}
+  .hero{grid-template-columns:1fr;padding-block:36px 16px;gap:20px}
+  #apparition{height:340px}
+  .preface{grid-template-columns:1fr;gap:20px}
+  .pnum{font-size:2.6rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .pattern:target .pnum{animation:none}
+}
+</style>
+</head>
+<body>
+
+<svg class="dg" width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="fm" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="arra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="fa" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">A pattern language · 24 patterns</div>
+    <h1>Houses for One Night</h1>
+    <p class="lede">For the buildings that are found standing at dusk, finished and humming, and are gone by morning. From the town down to the ring of dry ground it leaves.</p>
+  </div>
+  <div class="stage">
+    <canvas id="apparition" aria-label="A tower of stacked outlines condenses from the ground, stands, and evaporates from the bottom up, leaving a ring on the ground."></canvas>
+    <div class="clock" aria-hidden="true"><span id="clk">19:00</span><span id="phase">condensing</span></div>
+  </div>
+</header>
+
+<section class="preface">
+  <div>
+    <p>No one has watched one of these buildings being made. They are found complete, usually in the hour after sunset, in towns of a dozen to a few hundred. They stand one night. At first light they go, the way frost goes off a window: in order, from the edges in.</p>
+    <p>This language treats them as one would treat any vernacular. Larger patterns make room for smaller ones, and each pattern names the ones that complete it. It is written to the builder, as if you were the one making them. We are not. But writing it this way is the only way we have found to make the buildings make sense.</p>
+  </div>
+  <aside class="key">
+    <div class="eyebrow">On the asterisks</div>
+    <dl>
+      <dt>**</dt><dd>True of every such building we have found. We believe it is part of what they are.</dd>
+      <dt>*</dt><dd>Holds in most places, but we have seen exceptions.</dd>
+      <dt>&nbsp;</dt><dd>We record it because it keeps appearing. We do not understand it.</dd>
+    </dl>
+  </aside>
+</section>
+
+<nav class="index" aria-label="Patterns">
+  <div>
+    <div class="eyebrow">I</div><h2>Where they come down</h2>
+    <ol>
+      <li><span>1</span><a href="#p1">A Town for One Night</a></li>
+      <li><span>2</span><a href="#p2">Arrival Before the Roads</a></li>
+      <li><span>3</span><a href="#p3">The Empty Lot That Waits</a></li>
+      <li><span>4</span><a href="#p4">Growing Toward the Tide</a></li>
+      <li><span>5</span><a href="#p5">Distance by Sound</a></li>
+      <li><span>6</span><a href="#p6">The Shadow Precinct</a></li>
+    </ol>
+  </div>
+  <div>
+    <div class="eyebrow">II</div><h2>The houses</h2>
+    <ol>
+      <li><span>7</span><a href="#p7">Buildings That Arrive Facing Away</a></li>
+      <li><span>8</span><a href="#p8">One Wall Left Unfinished</a></li>
+      <li><span>9</span><a href="#p9">Half-Life of a Roof</a></li>
+      <li><span>10</span><a href="#p10">The Load-Bearing Silence</a></li>
+      <li><span>11</span><a href="#p11">Scaffold That Outlasts the House</a></li>
+      <li><span>12</span><a href="#p12">A House Smaller Inside</a></li>
+      <li><span>13</span><a href="#p13">Stairs That Climb Only Once</a></li>
+      <li><span>14</span><a href="#p14">Windows onto Yesterday</a></li>
+    </ol>
+  </div>
+  <div>
+    <div class="eyebrow">III</div><h2>Rooms and thresholds</h2>
+    <ol>
+      <li><span>15</span><a href="#p15">The Door That Is Only There from Inside</a></li>
+      <li><span>16</span><a href="#p16">Room for the One Who Has Not Come</a></li>
+      <li><span>17</span><a href="#p17">A Corner That Will Not Resolve</a></li>
+      <li><span>18</span><a href="#p18">Light from the Wrong Side</a></li>
+      <li><span>19</span><a href="#p19">The Anteroom of Forgetting</a></li>
+      <li><span>20</span><a href="#p20">Warmth Left in the Chair</a></li>
+    </ol>
+  </div>
+  <div>
+    <div class="eyebrow">IV</div><h2>Making and unmaking</h2>
+    <ol>
+      <li><span>21</span><a href="#p21">Materials That Remember Being Weather</a></li>
+      <li><span>22</span><a href="#p22">Build with What Will Leave</a></li>
+      <li><span>23</span><a href="#p23">The Course of Unlaying</a></li>
+      <li><span>24</span><a href="#p24">What Remains: A Ring of Dry Ground</a></li>
+    </ol>
+  </div>
+</nav>
+
+<!-- ============ I ============ -->
+<div class="group-head">
+  <div class="eyebrow">Part I</div>
+  <h2>Where they come down</h2>
+  <p>The town as a whole: how long it is for, where it stands, and how its buildings keep their distance.</p>
+</div>
+
+<article class="pattern" id="p1">
+  <div class="phead"><span class="pnum">1</span><h3>A Town for One Night<span class="stars">**</span></h3></div>
+  <p class="context">This pattern begins the language. Every pattern after it assumes the lifespan it sets.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A settlement meant to last is laid out for its own survival. A settlement that knows it will be gone by morning has to be laid out for something else.</p>
+  <p>The towns are never found half-built, and never half-gone by day. Each stands complete for one night and is planned as though that night were the whole of its purpose. The main street bends toward the point where the moon will stand highest. No building is set where it would still be in shadow at dawn. Nothing is stored: there are no cellars, no granaries, no rooms for keeping things. The plan is a plan for a single use, like a table laid for one meal.</p>
+  <p class="therefore"><em>Therefore:</em>Lay the town out for the length of one night. Turn its main street toward the moon's highest point, and give it nothing that implies a tomorrow: no stores, no foundations, no rooms for keeping.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="The moon's arc over a town whose street curves up toward the arc's highest point.">
+    <path class="m d" d="M30,132 Q180,-32 330,132"/>
+    <circle class="fa" cx="180" cy="50" r="6"/>
+    <text x="194" y="46">moon at its highest</text>
+    <line class="m" x1="16" y1="132" x2="344" y2="132"/>
+    <text x="260" y="146">dawn line</text>
+    <path class="a" d="M40,130 C90,128 150,122 176,70" marker-end="url(#arra)"/>
+    <rect class="f" x="58" y="116" width="12" height="9"/><rect class="f" x="84" y="112" width="14" height="10"/>
+    <rect class="f" x="112" y="104" width="12" height="11"/><rect class="f" x="134" y="94" width="12" height="10"/>
+    <text x="40" y="112">street</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Within the town, leave one site open for <a class="ref" href="#p3">the empty lot that waits (3)</a>. Set the buildings along <a class="ref" href="#p4">growing toward the tide (4)</a> and space them by <a class="ref" href="#p5">distance by sound (5)</a>.</p>
+</article>
+
+<article class="pattern" id="p2">
+  <div class="phead"><span class="pnum">2</span><h3>Arrival Before the Roads<span class="stars">*</span></h3></div>
+  <p class="context">…once <a class="ref" href="#p1">a town for one night (1)</a> is standing, there is the question of how anyone reaches it.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Roads are laid so that people can arrive. Here the buildings arrive first and no one walks to them, so the roads have some other job.</p>
+  <p>The roads are only found after the town has gone: pale bands of flattened grass, sometimes glazed, running between the places where buildings stood. They connect every building to every other one, including pairs nobody would ever walk between. None of them leads in from outside. They are not routes. They are a record of whatever passed between the buildings during the night. Surveyors who have tried to walk them report arriving a little earlier than they set out.</p>
+  <p class="therefore"><em>Therefore:</em>Lay no road toward the town. Let paths form between the buildings while they stand, and let them be what is left afterward: a map of every exchange the town had with itself.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Six building sites with a path between every pair, and a crossed-out road coming from outside.">
+    <g class="m">
+      <line x1="80" y1="40" x2="160" y2="28"/><line x1="80" y1="40" x2="260" y2="46"/><line x1="80" y1="40" x2="300" y2="104"/><line x1="80" y1="40" x2="210" y2="118"/><line x1="80" y1="40" x2="110" y2="112"/>
+      <line x1="160" y1="28" x2="260" y2="46"/><line x1="160" y1="28" x2="300" y2="104"/><line x1="160" y1="28" x2="210" y2="118"/><line x1="160" y1="28" x2="110" y2="112"/>
+      <line x1="260" y1="46" x2="300" y2="104"/><line x1="260" y1="46" x2="210" y2="118"/><line x1="260" y1="46" x2="110" y2="112"/>
+      <line x1="300" y1="104" x2="210" y2="118"/><line x1="300" y1="104" x2="110" y2="112"/><line x1="210" y1="118" x2="110" y2="112"/>
+    </g>
+    <g class="a d"><circle cx="80" cy="40" r="8"/><circle cx="160" cy="28" r="8"/><circle cx="260" cy="46" r="8"/><circle cx="300" cy="104" r="8"/><circle cx="210" cy="118" r="8"/><circle cx="110" cy="112" r="8"/></g>
+    <line class="m d" x1="4" y1="78" x2="46" y2="78"/>
+    <path class="a" d="M20,70 L32,86 M32,70 L20,86"/>
+    <text x="4" y="104">no road</text><text x="4" y="116">enters</text>
+    <text x="276" y="30">sites (gone)</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The roads are the first of the traces in <a class="ref" href="#p24">what remains: a ring of dry ground (24)</a>.</p>
+</article>
+
+<article class="pattern" id="p3">
+  <div class="phead"><span class="pnum">3</span><h3>The Empty Lot That Waits<span class="stars">**</span></h3></div>
+  <p class="context">…every town laid out as in <a class="ref" href="#p1">a town for one night (1)</a> has one site in it where nothing is built.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">If every site is filled, the town is only what its builders made. Something needs a place to come to on its own.</p>
+  <p>Near the middle of every town there is a plot the same size as the others, fully bordered, with a threshold stone at its front edge and nothing behind it. The ground inside stays dry in rain. In three of the recorded towns, when surveyors returned the following evening, a building stood on the empty lot, alone, on otherwise bare ground. It was not like the others. It had no windows, and its door faced the stone.</p>
+  <p class="therefore"><em>Therefore:</em>Leave one lot empty in the heart of the town. Border it, set a threshold stone at its edge, and build nothing on it. Keep it dry.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A grid of filled lots with one empty lot in the middle and a threshold stone at its edge.">
+    <g>
+      <rect class="f" x="40" y="20" width="44" height="30"/><rect class="f" x="90" y="20" width="44" height="30"/><rect class="f" x="140" y="20" width="44" height="30"/><rect class="f" x="190" y="20" width="44" height="30"/>
+      <rect class="f" x="40" y="56" width="44" height="30"/><rect class="f" x="90" y="56" width="44" height="30"/><rect class="f" x="190" y="56" width="44" height="30"/>
+      <rect class="f" x="40" y="92" width="44" height="30"/><rect class="f" x="90" y="92" width="44" height="30"/><rect class="f" x="140" y="92" width="44" height="30"/><rect class="f" x="190" y="92" width="44" height="30"/>
+    </g>
+    <rect class="a d" x="140" y="56" width="44" height="30"/>
+    <rect class="fa" x="155" y="84" width="14" height="4"/>
+    <line class="m" x1="186" y1="86" x2="252" y2="112"/><text x="256" y="116">threshold stone</text>
+    <line class="m" x1="184" y1="66" x2="252" y2="62"/><text x="256" y="66" class="ta">kept dry</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The building that sometimes arrives here is <a class="ref" href="#p16">room for the one who has not come (16)</a> at the scale of a whole house.</p>
+</article>
+
+<article class="pattern" id="p4">
+  <div class="phead"><span class="pnum">4</span><h3>Growing Toward the Tide<span class="stars">*</span></h3></div>
+  <p class="context">…with the town set for a single night <a class="ref" href="#p1">(1)</a>, choose where its edge lies.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A building placed safely out of reach of whatever will end it has no way of knowing when to leave.</p>
+  <p>The buildings stand in rows along a line that something is about to cross: the low-tide mark on a beach, the edge of a snowfield on a thawing night, the shadow of a hill that the sun will lift off at dawn. The front row always stands nearest that line. Each row behind it is built a little more slowly and a little more carefully, as if it had been told how long it had. The water does not destroy the town. It keeps its time.</p>
+  <p class="therefore"><em>Therefore:</em>Put the town's front edge on the line of whatever will next arrive: tide, thaw, or sunlight. Build each row back from it for a slightly longer stay.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A tide line on the left and four rows of buildings to the right, each lasting longer than the one before.">
+    <path class="a" d="M46,12 q-10,12 0,24 t0,24 t0,24 t0,24 t0,24"/>
+    <line class="m" x1="14" y1="20" x2="38" y2="20" marker-end="url(#arr)"/><text x="6" y="12">tide</text>
+    <g><rect class="f" x="78" y="30" width="30" height="18" style="opacity:.55"/><rect class="f" x="78" y="60" width="30" height="18" style="opacity:.55"/><rect class="f" x="78" y="90" width="30" height="18" style="opacity:.55"/></g>
+    <g><rect class="f" x="140" y="30" width="30" height="18" style="opacity:.8"/><rect class="f" x="140" y="60" width="30" height="18" style="opacity:.8"/><rect class="f" x="140" y="90" width="30" height="18" style="opacity:.8"/></g>
+    <g><rect class="f" x="202" y="30" width="30" height="18"/><rect class="f" x="202" y="60" width="30" height="18"/><rect class="f" x="202" y="90" width="30" height="18"/></g>
+    <g><rect x="264" y="30" width="30" height="18" class="m"/><rect class="f" x="264" y="30" width="30" height="18"/><rect x="264" y="60" width="30" height="18" class="m"/><rect class="f" x="264" y="60" width="30" height="18"/><rect x="264" y="90" width="30" height="18" class="m"/><rect class="f" x="264" y="90" width="30" height="18"/></g>
+    <text x="74" y="130">03:10</text><text x="136" y="130">04:05</text><text x="198" y="130">05:00</text><text x="262" y="130" class="ta">dawn</text>
+    <text x="74" y="144">row 1</text><text x="262" y="144">row 4</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Each building's own ending follows <a class="ref" href="#p9">half-life of a roof (9)</a> and <a class="ref" href="#p23">the course of unlaying (23)</a>.</p>
+</article>
+
+<article class="pattern" id="p5">
+  <div class="phead"><span class="pnum">5</span><h3>Distance by Sound</h3></div>
+  <p class="context">…within the town <a class="ref" href="#p1">(1)</a>, the buildings have to be spaced.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Buildings spaced by measure either crowd or scatter. These are spaced by something else, and we have only partly worked out what.</p>
+  <p>Every building hums: a low tone at the edge of hearing, different for each one. Measured on the ground, the distance between neighbours ranges from four paces to forty. Measured by ear, it never varies. Standing at any door you can just hear the next building, and you cannot hear the one beyond it. When a building leaves early, its neighbours are found to have moved.</p>
+  <p class="therefore"><em>Therefore:</em>Space each building from the next so that its sound is just audible at the neighbour's threshold and no farther. Let quiet houses stand close and loud ones stand apart.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Four circles of different sizes just touching, each a building's range of hearing.">
+    <circle class="m d" cx="62" cy="75" r="40"/><circle class="m d" cx="130" cy="75" r="28"/><circle class="m d" cx="208" cy="75" r="50"/><circle class="m d" cx="292" cy="75" r="34"/>
+    <circle class="fa" cx="62" cy="75" r="3.5"/><circle class="fa" cx="130" cy="75" r="3.5"/><circle class="fa" cx="208" cy="75" r="3.5"/><circle class="fa" cx="292" cy="75" r="3.5"/>
+    <line class="a" x1="102" y1="66" x2="102" y2="84"/>
+    <text x="70" y="140">just audible</text><line class="m" x1="102" y1="128" x2="102" y2="90"/>
+    <text x="38" y="28">quiet</text><text x="190" y="18">loud</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The hum is carried by <a class="ref" href="#p10">the load-bearing silence (10)</a>.</p>
+</article>
+
+<article class="pattern" id="p6">
+  <div class="phead"><span class="pnum">6</span><h3>The Shadow Precinct</h3></div>
+  <p class="context">…at the edge of some towns, beyond the last row of <a class="ref" href="#p4">growing toward the tide (4)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A town that is complete is closed. It seems to need an edge where it can go on without being built.</p>
+  <p>Beyond the last row lies a district of shadows. They are the cast shadows of buildings, with eaves, chimneys and the outlines of open windows, lying on bare ground with nothing standing there to cast them. They move correctly with the moon. People who have stood inside one say it was colder there, and that they could hear a door.</p>
+  <p class="therefore"><em>Therefore:</em>At the town's edge, lay out a district of shadows only. Cast them from buildings that are not there, and let them turn with the light.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Moonlight casting long shadows from building outlines that are not there.">
+    <circle class="fa" cx="28" cy="24" r="7"/>
+    <line class="m" x1="10" y1="118" x2="350" y2="118"/>
+    <rect class="m d" x="100" y="66" width="30" height="52"/><rect class="m d" x="170" y="80" width="26" height="38"/><rect class="m d" x="236" y="58" width="34" height="60"/>
+    <polygon class="f" points="100,118 130,118 176,142 146,142"/><polygon class="f" points="170,118 196,118 230,136 204,136"/><polygon class="f" points="236,118 270,118 330,146 296,146" />
+    <text x="111" y="96">?</text><text x="179" y="103">?</text><text x="249" y="92">?</text>
+    <text x="60" y="30">no building,</text><text x="60" y="42">only the shadow</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">These shadows obey the same rule as <a class="ref" href="#p18">light from the wrong side (18)</a>.</p>
+</article>
+
+<!-- ============ II ============ -->
+<div class="group-head">
+  <div class="eyebrow">Part II</div>
+  <h2>The houses</h2>
+  <p>Each building: which way it faces, what holds it up, and the rate at which it lets go.</p>
+</div>
+
+<article class="pattern" id="p7">
+  <div class="phead"><span class="pnum">7</span><h3>Buildings That Arrive Facing Away<span class="stars">**</span></h3></div>
+  <p class="context">…once a site is given by <a class="ref" href="#p3">(3)</a>, <a class="ref" href="#p4">(4)</a> and <a class="ref" href="#p5">(5)</a>, each building must be turned.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A building that faces the street greets whoever walks there. These buildings are not made for anyone who walks there.</p>
+  <p>Each building's principal face, the one with the ornament, the deepest eaves and the tallest door, is turned away from the street and toward something outside the town: a point in empty sky, a notch on the horizon, sometimes the empty lot. The street side is plain and nearly blank. Surveyors learn to walk around to the back of a building to find its front, and to find there that it is addressed to someone else.</p>
+  <p class="therefore"><em>Therefore:</em>Turn each building's front away from the street, toward whatever it was built to meet. Leave the street side plain.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Buildings along a street, with their fronts on the far side, all oriented toward one distant point.">
+    <line class="m" x1="20" y1="128" x2="340" y2="128"/><text x="24" y="143">street</text>
+    <rect class="f" x="60" y="86" width="50" height="30"/><rect class="f" x="150" y="86" width="50" height="30"/><rect class="f" x="240" y="86" width="50" height="30"/>
+    <line class="a" x1="60" y1="86" x2="110" y2="86"/><line class="a" x1="150" y1="86" x2="200" y2="86"/><line class="a" x1="240" y1="86" x2="290" y2="86"/>
+    <line class="m d" x1="85" y1="82" x2="186" y2="24" marker-end="url(#arr)"/><line class="m d" x1="175" y1="82" x2="192" y2="26" marker-end="url(#arr)"/><line class="m d" x1="265" y1="82" x2="200" y2="24" marker-end="url(#arr)"/>
+    <circle class="a" cx="194" cy="16" r="5"/><text x="206" y="19" class="ta">addressee</text>
+    <text x="298" y="90">front</text><text x="298" y="119">back</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The front door itself is <a class="ref" href="#p15">the door that is only there from inside (15)</a>.</p>
+</article>
+
+<article class="pattern" id="p8">
+  <div class="phead"><span class="pnum">8</span><h3>One Wall Left Unfinished<span class="stars">*</span></h3></div>
+  <p class="context">…every building turned as in <a class="ref" href="#p7">(7)</a> has four walls, and only three of them are finished.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A building with no way to begin its ending has to be torn down. A building that has one can simply leave.</p>
+  <p>One wall of every building is never closed. It is framed and partly filled, and its last courses stop on an uneven line, like a sentence broken off. This is the wall the building leaves by. At first light it goes first, and the rest follow. The few buildings found with all four walls closed have never been seen to go. They are the ones that remain as ruins, and nothing will live near them.</p>
+  <p class="therefore"><em>Therefore:</em>Leave one wall unfinished, on the side the building will leave toward. Stop its courses on an uneven line.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A house elevation with the right wall stopping partway up in uneven steps.">
+    <line x1="80" y1="130" x2="240" y2="130"/>
+    <line x1="80" y1="130" x2="80" y2="44"/><line x1="80" y1="44" x2="160" y2="14"/><line class="m d" x1="160" y1="14" x2="240" y2="44"/>
+    <polyline class="a" points="240,130 240,104 232,104 232,92 240,92 240,84 226,84 226,76 236,76"/>
+    <line class="m d" x1="240" y1="76" x2="240" y2="44"/>
+    <line class="m" x1="254" y1="94" x2="316" y2="94" marker-end="url(#arr)"/>
+    <text x="252" y="112" class="ta">leaves from here</text>
+    <text x="96" y="146">three walls closed</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The half-wall is filled with the quickest of the materials in <a class="ref" href="#p22">build with what will leave (22)</a>.</p>
+</article>
+
+<article class="pattern" id="p9">
+  <div class="phead"><span class="pnum">9</span><h3>Half-Life of a Roof<span class="stars">**</span></h3></div>
+  <p class="context">…each building needs a roof, and the roof must go at a rate that can be known.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A roof that lasts until it suddenly fails catches whoever is under it. A roof that fades gives warning.</p>
+  <p>No roof is ever lost all at once. Measured through the night, each one loses half its substance in a fixed time, then half of what remains in the same time again. The time differs from building to building, from about an hour to most of the night, but for any one roof it never changes. So the roof never quite reaches nothing. At dawn it is a haze held at the height of the eaves, and rain falling through it comes down warm.</p>
+  <p class="therefore"><em>Therefore:</em>Make every roof decay by halves at a steady rate suited to its building. Let the last of it hang at the height of the eaves after everything else is gone.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="An exponential decay curve of roof substance over the night, halving every two hours.">
+    <line class="m" x1="40" y1="20" x2="40" y2="130"/><line class="m" x1="40" y1="130" x2="330" y2="130"/>
+    <line class="m d" x1="40" y1="75" x2="112.5" y2="75"/><line class="m d" x1="112.5" y1="75" x2="112.5" y2="130"/>
+    <line class="m d" x1="40" y1="102.5" x2="185" y2="102.5"/><line class="m d" x1="185" y1="102.5" x2="185" y2="130"/>
+    <line class="m d" x1="40" y1="116.25" x2="257.5" y2="116.25"/><line class="m d" x1="257.5" y1="116.25" x2="257.5" y2="130"/>
+    <polyline class="a" points="40,20 58.1,34.8 76.25,52.2 94.4,64.9 112.5,75 130.6,83.6 148.75,91.1 166.9,97.3 185,102.5 203.1,107 221.25,110.6 239.4,113.6 257.5,116.25 275.6,118.3 293.75,120.3 311.9,121.8 330,123.1"/>
+    <text x="10" y="24">roof</text><text x="22" y="79">½</text><text x="22" y="106">¼</text><text x="22" y="120">⅛</text>
+    <text x="30" y="145">dusk</text><text x="98" y="145">2 h</text><text x="172" y="145">4 h</text><text x="244" y="145">6 h</text><text x="312" y="145">dawn</text>
+    <text x="220" y="40" class="ta">haze at the eaves</text><line class="m" x1="286" y1="44" x2="312" y2="118"/>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Set the rate by the building's row in <a class="ref" href="#p4">growing toward the tide (4)</a>. The roof rests on <a class="ref" href="#p10">the load-bearing silence (10)</a>.</p>
+</article>
+
+<article class="pattern" id="p10">
+  <div class="phead"><span class="pnum">10</span><h3>The Load-Bearing Silence<span class="stars">*</span></h3></div>
+  <p class="context">…between the roof <a class="ref" href="#p9">(9)</a> and the ground.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">The buildings have no posts strong enough to carry what stands on them. Something else is taking the weight.</p>
+  <p>Where a house would have its main posts, these buildings have places where sound stops. Clap in the central room and the echo returns from every direction but four, arranged as columns would be. Speak into one of those places and your voice does not come back at all. When one surveyor kept up a noise at one of them for long enough, the floor above it sagged. The building's hum <a class="ref" href="#p5">(5)</a> runs around these points and never through them.</p>
+  <p class="therefore"><em>Therefore:</em>Carry the building on columns of silence. Put them where the posts would go, keep them clear of noise, and never let the hum pass through them.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A floor plan with four circles of silence where posts would be, and sound lines bending around them.">
+    <rect class="m" x="60" y="18" width="240" height="116"/>
+    <circle class="a d" cx="130" cy="52" r="11"/><circle class="a d" cx="230" cy="52" r="11"/><circle class="a d" cx="130" cy="100" r="11"/><circle class="a d" cx="230" cy="100" r="11"/>
+    <path class="m" d="M70,52 L108,52 Q130,24 152,52 L208,52 Q230,24 252,52 L290,52"/>
+    <path class="m" d="M70,100 L108,100 Q130,128 152,100 L208,100 Q230,128 252,100 L290,100"/>
+    <path class="m" d="M70,76 C110,70 150,82 180,76 S250,70 290,76"/>
+    <text x="306" y="56" class="ta">silence</text><text x="306" y="80">hum</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">One of the silences always stands near <a class="ref" href="#p17">a corner that will not resolve (17)</a>. The silences outlast everything but the rings; see <a class="ref" href="#p22">(22)</a> and <a class="ref" href="#p24">(24)</a>.</p>
+</article>
+
+<article class="pattern" id="p11">
+  <div class="phead"><span class="pnum">11</span><h3>Scaffold That Outlasts the House</h3></div>
+  <p class="context">…around some buildings, most often the tallest.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Scaffold goes up before a building and comes down after it. Here it goes up after.</p>
+  <p>On the evening after a building has gone, a scaffold is sometimes found standing in its place, lashed together from pale poles, climbing to exactly the height and outline of the vanished walls. It holds nothing up. Its planks are worn, as if a great deal of work had been done from them. It stands two or three days and then it too is gone. We believe this is how the building is taken apart. We have never seen anything on the platforms.</p>
+  <p class="therefore"><em>Therefore:</em>Once the building has left, raise a scaffold in its exact outline, and let it stand until the unmaking is finished.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Scaffold poles and platforms standing around the dashed outline of a house that has gone.">
+    <polygon class="m d" points="100,130 100,62 160,26 220,62 220,130"/>
+    <g class="a"><line x1="92" y1="132" x2="92" y2="56"/><line x1="130" y1="132" x2="130" y2="38"/><line x1="160" y1="132" x2="160" y2="20"/><line x1="190" y1="132" x2="190" y2="38"/><line x1="228" y1="132" x2="228" y2="56"/>
+    <line x1="88" y1="108" x2="232" y2="108"/><line x1="88" y1="84" x2="232" y2="84"/><line x1="88" y1="60" x2="232" y2="60"/><line x1="126" y1="40" x2="194" y2="40"/>
+    <line x1="92" y1="108" x2="130" y2="84"/><line x1="190" y1="84" x2="228" y2="108"/></g>
+    <line class="m" x1="12" y1="132" x2="348" y2="132"/>
+    <text x="244" y="70">house: gone</text><text x="244" y="100" class="ta">scaffold: day 2</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">This is the final stage of <a class="ref" href="#p23">the course of unlaying (23)</a>.</p>
+</article>
+
+<article class="pattern" id="p12">
+  <div class="phead"><span class="pnum">12</span><h3>A House Smaller Inside<span class="stars">**</span></h3></div>
+  <p class="context">…inside each building made according to <a class="ref" href="#p7">(7)</a> through <a class="ref" href="#p10">(10)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A room large enough for a person tells that person they are welcome.</p>
+  <p>Every building is smaller inside than out. Thick walls do not explain it. Measured from both sides, the walls agree with each other, and still the rooms add up to about two-thirds of the footprint. The missing third cannot be found behind any wall. People who have spent a night in one describe the rooms as fitted, as though made for a body a little smaller than ours and much more still.</p>
+  <p class="therefore"><em>Therefore:</em>Make the interior two-thirds the size of the exterior. Do not account for the difference.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="An outer square of twelve paces with an inner square of eight paces, the difference unexplained.">
+    <rect x="50" y="18" width="114" height="114"/>
+    <rect class="a" x="69" y="37" width="76" height="76"/>
+    <rect class="fg" x="69" y="37" width="76" height="76"/>
+    <text x="196" y="40">outside: 12 paces</text>
+    <text x="196" y="68" class="ta">inside: 8 paces</text>
+    <text x="196" y="96">remaining third:</text><text x="196" y="110">not found</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The rooms inside are given in <a class="ref" href="#p16">room for the one who has not come (16)</a> and <a class="ref" href="#p20">warmth left in the chair (20)</a>. Where there is an upper floor, reach it by <a class="ref" href="#p13">(13)</a>.</p>
+</article>
+
+<article class="pattern" id="p13">
+  <div class="phead"><span class="pnum">13</span><h3>Stairs That Climb Only Once<span class="stars">*</span></h3></div>
+  <p class="context">…where a building has more than one floor <a class="ref" href="#p12">(12)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A stair that can be climbed any number of times makes the floor above it ordinary.</p>
+  <p>Each stair can be climbed once. Its treads are soft underfoot, like packed snow, and they keep the print of the first foot to press them. The next person finds the stair still there but leading nowhere: the treads rise, and the landing is the floor they started from. The upper rooms are the most carefully made in the house. Almost none of us have seen them.</p>
+  <p class="therefore"><em>Therefore:</em>Build each stair to be climbed a single time. Make the treads take a print, and after the first ascent let the stair lead back to its own foot.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A stair with footprints on each tread; a second path loops back to the bottom.">
+    <polyline points="60,132 60,117 80,117 80,102 100,102 100,87 120,87 120,72 140,72 140,57 160,57 160,42 200,42"/>
+    <g class="fa"><ellipse cx="70" cy="114" rx="4" ry="1.8"/><ellipse cx="90" cy="99" rx="4" ry="1.8"/><ellipse cx="110" cy="84" rx="4" ry="1.8"/><ellipse cx="130" cy="69" rx="4" ry="1.8"/><ellipse cx="150" cy="54" rx="4" ry="1.8"/></g>
+    <path class="m d" d="M86,112 C140,40 230,90 70,140" marker-end="url(#arr)"/>
+    <text x="208" y="46" class="ta">first: the upper floor</text>
+    <text x="208" y="122">second: back to the foot</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The rooms at the top are lit by <a class="ref" href="#p14">windows onto yesterday (14)</a>.</p>
+</article>
+
+<article class="pattern" id="p14">
+  <div class="phead"><span class="pnum">14</span><h3>Windows onto Yesterday</h3></div>
+  <p class="context">…in the upper rooms reached by <a class="ref" href="#p13">(13)</a>, and more rarely on the ground floor.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A window shows what is outside now. A building that will not see tomorrow has little use for now.</p>
+  <p>Through some windows the view is of the same place on the previous evening, before the town arrived: bare ground, standing grass. The weather in the window does not match the weather outside. Twice, a surveyor looking through one has seen themselves a day earlier, walking the empty site and taking notes. Neither remembered looking up.</p>
+  <p class="therefore"><em>Therefore:</em>Glaze the windows of the upper rooms so that they show the site as it was before the building came.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A four-pane window showing an empty field with a small figure walking in it.">
+    <rect x="110" y="14" width="124" height="122"/>
+    <line class="m" x1="172" y1="14" x2="172" y2="136"/><line class="m" x1="110" y1="75" x2="234" y2="75"/>
+    <line class="a" x1="110" y1="100" x2="234" y2="100"/>
+    <g class="m"><line x1="122" y1="112" x2="124" y2="106"/><line x1="140" y1="120" x2="142" y2="114"/><line x1="160" y1="110" x2="162" y2="104"/><line x1="186" y1="124" x2="188" y2="118"/><line x1="214" y1="112" x2="216" y2="106"/><line x1="130" y1="128" x2="132" y2="122"/><line x1="206" y1="128" x2="208" y2="122"/></g>
+    <g class="a"><circle cx="198" cy="84" r="2.5"/><line x1="198" y1="87" x2="198" y2="96"/><line x1="198" y1="96" x2="195" y2="100"/><line x1="198" y1="96" x2="201" y2="100"/></g>
+    <text x="248" y="96" class="ta">the site,</text><text x="248" y="108" class="ta">last evening</text>
+    <text x="14" y="96">outside now:</text><text x="14" y="108">the town</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The light that comes through these windows falls as in <a class="ref" href="#p18">light from the wrong side (18)</a>.</p>
+</article>
+
+<!-- ============ III ============ -->
+<div class="group-head">
+  <div class="eyebrow">Part III</div>
+  <h2>Rooms and thresholds</h2>
+  <p>What the inside is for, and what it does to the people who pass through it.</p>
+</div>
+
+<article class="pattern" id="p15">
+  <div class="phead"><span class="pnum">15</span><h3>The Door That Is Only There from Inside<span class="stars">**</span></h3></div>
+  <p class="context">…on the principal face of every building <a class="ref" href="#p7">(7)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A door that opens from outside lets in whoever is outside. These doors are for leaving.</p>
+  <p>From outside, the principal face has no door. There is a carved lintel over a stretch of blank wall. From inside, the same wall has a full-height door with its latch worn smooth. Surveyors have entered through the unfinished wall <a class="ref" href="#p8">(8)</a>, walked out through this door, turned around, and found only the lintel. The latches are always on the inside and always worn, though no building stands long enough to wear anything.</p>
+  <p class="therefore"><em>Therefore:</em>Make the main door a door only from within. From outside, mark its place with a lintel and nothing else.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Two elevations of the same wall: from outside a lintel over blank wall, from inside a lintel over a door with a latch.">
+    <rect class="f" x="24" y="18" width="136" height="104"/><line class="a" x1="62" y1="44" x2="122" y2="44" style="stroke-width:3"/>
+    <rect class="f" x="200" y="18" width="136" height="104"/><line class="a" x1="238" y1="44" x2="298" y2="44" style="stroke-width:3"/>
+    <rect x="246" y="48" width="44" height="74"/><circle class="fa" cx="282" cy="88" r="2.5"/>
+    <text x="48" y="140">from outside</text><text x="230" y="140">from inside</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Just before this door, place <a class="ref" href="#p19">the anteroom of forgetting (19)</a>.</p>
+</article>
+
+<article class="pattern" id="p16">
+  <div class="phead"><span class="pnum">16</span><h3>Room for the One Who Has Not Come<span class="stars">**</span></h3></div>
+  <p class="context">…in every house made smaller inside <a class="ref" href="#p12">(12)</a>, one room is set apart.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A house built only for the people in it is closed to anyone else. These houses are built for someone else first.</p>
+  <p>Each building has one room better made than the rest. It has the best light, a raised sleeping shelf, and a bowl set out. The bowl is always clean and the shelf never slept on. The room is never at the centre of the plan. It lies on the side that faces the building's addressee <a class="ref" href="#p7">(7)</a>, and it is the last room to go at dawn. If anyone has ever used one, they left nothing behind.</p>
+  <p class="therefore"><em>Therefore:</em>In every house, make one room for the guest who has not arrived. Give it the best light, set out a bowl, and put it on the side facing whoever the house is waiting for.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A house plan with one room on the far side shaded, containing a bowl, facing outward.">
+    <rect x="40" y="20" width="220" height="110"/>
+    <line x1="120" y1="20" x2="120" y2="130"/><line x1="190" y1="20" x2="190" y2="130"/><line x1="40" y1="75" x2="120" y2="75"/>
+    <rect class="fg" x="190" y="20" width="70" height="110"/>
+    <circle class="a" cx="225" cy="75" r="7"/><circle class="fa" cx="225" cy="75" r="2"/>
+    <line class="m" x1="266" y1="75" x2="334" y2="75" marker-end="url(#arr)"/>
+    <text x="268" y="66">toward the</text><text x="268" y="92">addressee</text>
+    <text x="196" y="145" class="ta">guest room</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Its chair is kept as in <a class="ref" href="#p20">warmth left in the chair (20)</a>. Its walls are made of the longest-lasting material <a class="ref" href="#p22">(22)</a>.</p>
+</article>
+
+<article class="pattern" id="p17">
+  <div class="phead"><span class="pnum">17</span><h3>A Corner That Will Not Resolve</h3></div>
+  <p class="context">…where two walls meet near one of the columns of silence <a class="ref" href="#p10">(10)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">We do not know what problem this solves.</p>
+  <p>In one corner of each building, the walls do not meet. Seen straight on they appear to, but the eye cannot settle on the join. A plumb line hung there swings toward the wall and away and never comes to rest. Objects left in the corner are later found in the opposite one. Children, on the occasions they have been with us, would not sit with their backs to it.</p>
+  <p class="therefore"><em>Therefore:</em>In one corner, let the walls fail to meet. Do not close the join.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Two walls that almost meet at a corner, with a plumb line swinging near the gap.">
+    <line x1="40" y1="30" x2="172" y2="30" style="stroke-width:3"/>
+    <line x1="182" y1="38" x2="182" y2="138" style="stroke-width:3"/>
+    <circle class="fa" cx="177" cy="34" r="2"/>
+    <line class="m" x1="150" y1="30" x2="142" y2="100"/><circle class="fa" cx="142" cy="102" r="3.5"/>
+    <path class="a d" d="M124,98 Q150,112 168,94"/>
+    <text x="196" y="40" class="ta">the join</text>
+    <text x="40" y="128">plumb never rests</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">This corner is most often the one nearest <a class="ref" href="#p16">room for the one who has not come (16)</a>.</p>
+</article>
+
+<article class="pattern" id="p18">
+  <div class="phead"><span class="pnum">18</span><h3>Light from the Wrong Side<span class="stars">*</span></h3></div>
+  <p class="context">…in every room lit by the windows of <a class="ref" href="#p14">(14)</a> or by lamps.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Ordinary light tells you the hour and where you stand. In a house that exists for one night, neither should be trusted.</p>
+  <p>Light in the rooms falls from the side opposite its source. A lamp on the east wall throws shadows toward the east wall. Moonlight through a south window lights the south faces of things and leaves their north faces dark. After an hour inside, people start walking toward shadows to find the light, and when they leave they misjudge the way out.</p>
+  <p class="therefore"><em>Therefore:</em>Let every source of light in the house cast its shadows toward itself.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A lamp on the left wall; an object's shadow falls to the left, toward the lamp.">
+    <line x1="40" y1="16" x2="40" y2="130"/><line class="m" x1="40" y1="130" x2="340" y2="130"/>
+    <circle class="fa" cx="54" cy="52" r="6"/>
+    <g class="a"><line x1="64" y1="52" x2="76" y2="52"/><line x1="62" y1="44" x2="72" y2="38"/><line x1="62" y1="60" x2="72" y2="66"/></g>
+    <rect x="200" y="84" width="34" height="46"/>
+    <polygon class="f" points="200,130 234,130 150,146 104,146" style="fill:var(--ink);opacity:.18"/>
+    <text x="244" y="100">object</text>
+    <text x="96" y="30" class="ta">shadow falls</text><text x="96" y="42" class="ta">toward the lamp</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Outside the town, the same light casts <a class="ref" href="#p6">the shadow precinct (6)</a>.</p>
+</article>
+
+<article class="pattern" id="p19">
+  <div class="phead"><span class="pnum">19</span><h3>The Anteroom of Forgetting<span class="stars">**</span></h3></div>
+  <p class="context">…between the rooms and <a class="ref" href="#p15">the door that is only there from inside (15)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A person leaving a house carries the house away with them. These houses do not want to be carried.</p>
+  <p>Before the door there is a small bare room, just large enough to turn around in. People who pass through it remember the building as a whole, its size, its hum and which way it faced, but not one of its rooms. Notes written inside survive and are in the writer's hand, and the writer does not recognise them. This is why surveys of these buildings are kept in two columns: what was seen, and what was later read.</p>
+  <p class="therefore"><em>Therefore:</em>Put a small bare room between the house and the way out. Let it keep the rooms and let the house go.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Rooms full of small marks lead into a small empty anteroom; nothing passes out of it.">
+    <rect x="30" y="30" width="150" height="90"/><line x1="105" y1="30" x2="105" y2="120"/>
+    <g class="fa"><circle cx="50" cy="52" r="2.5"/><circle cx="72" cy="90" r="2.5"/><circle cx="88" cy="62" r="2.5"/><circle cx="126" cy="50" r="2.5"/><circle cx="150" cy="98" r="2.5"/><circle cx="160" cy="66" r="2.5"/><circle cx="58" cy="106" r="2.5"/></g>
+    <rect x="196" y="55" width="40" height="40"/>
+    <line class="m" x1="180" y1="75" x2="196" y2="75"/>
+    <line class="m d" x1="240" y1="75" x2="320" y2="75" marker-end="url(#arr)"/>
+    <text x="30" y="138">rooms</text><text x="190" y="112" class="ta">anteroom</text>
+    <text x="252" y="64">the house,</text><text x="252" y="92">no rooms</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">What is not forgotten is what the ground keeps, in <a class="ref" href="#p24">what remains: a ring of dry ground (24)</a>.</p>
+</article>
+
+<article class="pattern" id="p20">
+  <div class="phead"><span class="pnum">20</span><h3>Warmth Left in the Chair<span class="stars">*</span></h3></div>
+  <p class="context">…in <a class="ref" href="#p16">the room for the one who has not come (16)</a>, and in some of the others.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">An empty chair looks unused. These chairs must look as though someone has just stood up.</p>
+  <p>In each room at least one seat is warm. The warmth is exactly that of a body and has the shape of one, somewhat narrower than ours. It does not cool through the night. The cushion is pressed. If you sit down in it, the warmth moves to the next chair.</p>
+  <p class="therefore"><em>Therefore:</em>Keep one seat in each room warm, as if just left, and let the warmth move away from anyone who takes it.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A chair surrounded by heat contours, and an arrow showing the warmth moving to a second chair.">
+    <polyline points="70,40 70,96 124,96 124,132"/><line x1="70" y1="96" x2="70" y2="132"/>
+    <ellipse class="a d" cx="96" cy="88" rx="22" ry="10"/><ellipse class="a d" cx="96" cy="84" rx="36" ry="20"/><ellipse class="a d" cx="96" cy="78" rx="50" ry="32"/>
+    <polyline points="244,40 244,96 298,96 298,132"/><line x1="244" y1="96" x2="244" y2="132"/>
+    <path class="m" d="M156,70 Q200,40 236,76" marker-end="url(#arr)"/>
+    <text x="160" y="36">when you sit</text>
+    <text x="64" y="146" class="ta">warm</text><text x="240" y="146">next</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">This warmth is the last thing to leave; see <a class="ref" href="#p23">the course of unlaying (23)</a>.</p>
+</article>
+
+<!-- ============ IV ============ -->
+<div class="group-head">
+  <div class="eyebrow">Part IV</div>
+  <h2>Making and unmaking</h2>
+  <p>What the buildings are made of, and the order in which they give it back.</p>
+</div>
+
+<article class="pattern" id="p21">
+  <div class="phead"><span class="pnum">21</span><h3>Materials That Remember Being Weather<span class="stars">**</span></h3></div>
+  <p class="context">…every pattern above is built out of something.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Material taken from the ground wants to stay. These buildings need material that wants to go back.</p>
+  <p>The walls are grown from condensation: the dew of the site, the fog that lay there the evening before, the breath of anyone nearby. Scraped with a blade, a wall gives up a fine frost that melts in the hand. Its grain matches the frost that formed on the site's grass the winter before. In fog country the buildings are tall and fine. In desert they are low and thick, and they go very quickly.</p>
+  <p class="therefore"><em>Therefore:</em>Build from the site's own weather: dew, fog, frost and breath. Let the wetter places have the finer houses.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="Wavy lines of vapour rising and condensing into a lattice of crystals that forms a wall.">
+    <g class="m"><path d="M70,140 q6,-8 0,-16 t0,-16 t0,-16"/><path d="M120,140 q6,-8 0,-16 t0,-16 t0,-16"/><path d="M170,140 q6,-8 0,-16 t0,-16 t0,-16"/><path d="M220,140 q6,-8 0,-16 t0,-16 t0,-16"/><path d="M270,140 q6,-8 0,-16 t0,-16 t0,-16"/></g>
+    <g class="a">
+      <path d="M60,62 L80,42 L100,62 L120,42 L140,62 L160,42 L180,62 L200,42 L220,62 L240,42 L260,62 L280,42 L300,62"/>
+      <path d="M60,42 L80,22 L100,42 L120,22 L140,42 L160,22 L180,42 L200,22 L220,42 L240,22 L260,42 L280,22 L300,42"/>
+      <line x1="60" y1="22" x2="300" y2="22" class="m"/>
+    </g>
+    <text x="304" y="44" class="ta">wall</text><text x="290" y="136">fog, dew,</text><text x="290" y="148">breath</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Place the materials as in <a class="ref" href="#p22">build with what will leave (22)</a>.</p>
+</article>
+
+<article class="pattern" id="p22">
+  <div class="phead"><span class="pnum">22</span><h3>Build with What Will Leave<span class="stars">*</span></h3></div>
+  <p class="context">…having chosen <a class="ref" href="#p21">materials that remember being weather (21)</a>.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A structure with its strongest material at the base is built to last. A structure meant to leave needs its most lasting material wherever it must go last.</p>
+  <p>Material is placed by how long it lasts, not by how much it carries. The slowest frost, hoar, lines the room for the one who has not come <a class="ref" href="#p16">(16)</a> and gathers around the warm chairs <a class="ref" href="#p20">(20)</a>. The quickest fog fills the walls nearest the tide <a class="ref" href="#p4">(4)</a> and the unfinished wall <a class="ref" href="#p8">(8)</a>. The load goes to the silences <a class="ref" href="#p10">(10)</a>, which do not dissolve at all and stand, unseen, for months.</p>
+  <p class="therefore"><em>Therefore:</em>Place each material by how long it will last, with the most lasting where the building must go last. Carry the weight on silence.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A house plan shaded by material: fog on the tide side, rime in the middle, hoar in the guest room, and four silences.">
+    <rect x="30" y="24" width="200" height="104"/>
+    <rect x="30" y="24" width="50" height="104" style="fill:var(--accent);opacity:.12;stroke:none"/>
+    <rect x="80" y="24" width="90" height="104" style="fill:var(--accent);opacity:.3;stroke:none"/>
+    <rect x="170" y="24" width="60" height="104" style="fill:var(--accent);opacity:.6;stroke:none"/>
+    <line x1="80" y1="24" x2="80" y2="128" class="m"/><line x1="170" y1="24" x2="170" y2="128" class="m"/>
+    <g class="a d"><circle cx="80" cy="50" r="6"/><circle cx="170" cy="50" r="6"/><circle cx="80" cy="102" r="6"/><circle cx="170" cy="102" r="6"/></g>
+    <text x="246" y="36">fog · 1 h</text><text x="246" y="62">rime · 4 h</text><text x="246" y="88" class="ta">hoar · dawn</text><text x="246" y="114">silence · months</text>
+    <text x="30" y="144">tide side</text><text x="170" y="144">guest room</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">The order of leaving is given in <a class="ref" href="#p23">the course of unlaying (23)</a>.</p>
+</article>
+
+<article class="pattern" id="p23">
+  <div class="phead"><span class="pnum">23</span><h3>The Course of Unlaying<span class="stars">**</span></h3></div>
+  <p class="context">…every pattern in this language ends here.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">A building that falls apart at random leaves wreckage. A building that unlays in order leaves only what it means to.</p>
+  <p>At first light the buildings go in a fixed sequence. First the unfinished wall <a class="ref" href="#p8">(8)</a>, then the plain walls on the street side, then the last haze of the roof <a class="ref" href="#p9">(9)</a>, then the stairs, the windows and the ordinary rooms. The room for the one who has not come goes last but one. The very last is the warmth in the chair <a class="ref" href="#p20">(20)</a>, which can be felt in the open air for several minutes after the chair has gone. After that, where there is one, comes the scaffold <a class="ref" href="#p11">(11)</a>.</p>
+  <p class="therefore"><em>Therefore:</em>Unlay the house in reverse order of its importance: the plainest parts first, the guest's room last but one, and the warmth last of all.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A timeline of nine stages from the unfinished wall to the scaffold.">
+    <line class="m" x1="24" y1="76" x2="336" y2="76"/>
+    <g class="fa"><circle cx="30" cy="76" r="3"/><circle cx="67.5" cy="76" r="3"/><circle cx="105" cy="76" r="3"/><circle cx="142.5" cy="76" r="3"/><circle cx="180" cy="76" r="3"/><circle cx="217.5" cy="76" r="3"/><circle cx="255" cy="76" r="3"/></g>
+    <circle class="a" cx="292.5" cy="76" r="6"/><circle class="fa" cx="292.5" cy="76" r="3"/>
+    <circle class="m d" cx="330" cy="76" r="4"/>
+    <g>
+      <text x="22" y="60">1 open wall</text>
+      <text x="56" y="100">2 street walls</text>
+      <text x="96" y="60">3 roof haze</text>
+      <text x="134" y="100">4 stairs</text>
+      <text x="170" y="60">5 windows</text>
+      <text x="206" y="100">6 rooms</text>
+      <text x="236" y="44">7 guest room</text>
+      <text x="262" y="124" class="ta">8 warmth</text>
+      <text x="300" y="44">9 scaffold</text>
+    </g>
+    <text x="10" y="144">first light</text><text x="262" y="144">days later</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">What is left is <a class="ref" href="#p24">what remains: a ring of dry ground (24)</a>.</p>
+</article>
+
+<article class="pattern" id="p24">
+  <div class="phead"><span class="pnum">24</span><h3>What Remains: A Ring of Dry Ground<span class="stars">**</span></h3></div>
+  <p class="context">…this pattern completes the language.</p>
+  <div class="dia">❖❖❖</div>
+  <p class="problem">Something should be left behind, so the place knows it was chosen.</p>
+  <p>Where each building stood, the ground stays dry in a ring the width of its walls, even through rain, for about a year. Inside the ring the grass comes back first. The roads <a class="ref" href="#p2">(2)</a> fade within a week, the scaffold <a class="ref" href="#p11">(11)</a> in three days, the silences <a class="ref" href="#p10">(10)</a> over some months. The rings last longest. From the air an old site looks like a field of fairy rings, and each ring hums very faintly at its own pitch, set from its neighbour at exactly the distance where it can just be heard.</p>
+  <p class="therefore"><em>Therefore:</em>When everything else has gone, leave a ring of dry ground where the walls stood. Leave nothing else.</p>
+  <figure class="diagram"><svg class="dg" viewBox="0 0 360 150" role="img" aria-label="A field of rings of different sizes seen in perspective.">
+    <g class="a"><ellipse cx="70" cy="60" rx="30" ry="11" style="stroke-width:4;opacity:.7"/><ellipse cx="160" cy="44" rx="22" ry="8" style="stroke-width:3;opacity:.6"/><ellipse cx="258" cy="58" rx="38" ry="13" style="stroke-width:4;opacity:.7"/>
+    <ellipse cx="118" cy="104" rx="42" ry="15" style="stroke-width:5;opacity:.8"/><ellipse cx="226" cy="116" rx="28" ry="10" style="stroke-width:4;opacity:.7"/><ellipse cx="318" cy="104" rx="20" ry="7" style="stroke-width:3;opacity:.6"/></g>
+    <text x="10" y="144">rings last about a year</text>
+  </svg></figure>
+  <div class="dia">❖❖❖</div>
+  <p class="connections">Where the rings lie thickest, <a class="ref" href="#p1">a town for one night (1)</a> is more likely to come down again.</p>
+</article>
+
+<footer>
+  <p>Twenty-four patterns. The language is incomplete: there are certainly patterns for the upper rooms that no one has been able to write down. Surveys continue each autumn, when the fog is heaviest and the towns are most frequent.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var c = document.getElementById('apparition');
+  var ctx = c.getContext('2d');
+  var clk = document.getElementById('clk'), ph = document.getElementById('phase');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0;
+  function size(){
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var r = c.getBoundingClientRect();
+    W = r.width; H = r.height;
+    c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size(); window.addEventListener('resize', size);
+
+  var N = 22, CYCLE = 18000;
+  var courses = [];
+  for (var i = 0; i < N; i++){
+    var taper = i > N - 6 ? (i - (N - 6)) * 0.07 : 0;
+    courses.push({
+      w: 0.55 + 0.2 * Math.sin(i * 0.55) - taper,
+      d: 0.34 + 0.1 * Math.cos(i * 0.8) - taper * 0.5,
+      a: i * 0.065 + 0.25 * Math.sin(i * 0.33)
+    });
+  }
+  function rnd(n){ var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function sm(x){ x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
+  function pts(k, i, s, cx, by, h){
+    var q = [[-k.w,-k.d],[k.w,-k.d],[k.w,k.d],[-k.w,k.d]], out = [];
+    var ca = Math.cos(k.a), sa = Math.sin(k.a);
+    for (var j = 0; j < 4; j++){
+      var x = q[j][0]*ca - q[j][1]*sa, y = q[j][0]*sa + q[j][1]*ca;
+      out.push([cx + (x - y) * 0.866 * s, by - i * h + (x + y) * 0.5 * s]);
+    }
+    return out;
+  }
+  var lastLabel = '';
+  function label(t){
+    var mins = Math.floor(t * 12 * 60), hh = (19 + Math.floor(mins / 60)) % 24, mm = mins % 60;
+    var p = t < 0.3 ? 'condensing' : t < 0.55 ? 'standing' : t < 0.86 ? 'unlaying' : 'ring of dry ground';
+    var s = (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm + '|' + p;
+    if (s !== lastLabel){ lastLabel = s; clk.textContent = s.split('|')[0]; ph.textContent = p; }
+  }
+  function draw(now){
+    var t = reduce ? 0.45 : (now % CYCLE) / CYCLE;
+    var cs = getComputedStyle(document.documentElement);
+    var ink = cs.getPropertyValue('--ink').trim() || '#1B2124';
+    var acc = cs.getPropertyValue('--accent').trim() || '#5B5290';
+    ctx.clearRect(0, 0, W, H);
+    var s = Math.min(W * 0.34, H * 0.36), cx = W / 2, by = H * 0.84, h = (H * 0.66) / N;
+
+    // the ring of dry ground
+    var ringA = 0.12 + 0.6 * sm((t - 0.8) / 0.08) * (1 - sm((t - 0.96) / 0.04));
+    ctx.globalAlpha = ringA; ctx.strokeStyle = acc; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.ellipse(cx, by, s * 0.78, s * 0.3, 0, 0, Math.PI * 2); ctx.stroke();
+
+    var P = [], A = [], D = [];
+    for (var i = 0; i < N; i++){
+      var appear = 0.02 + (i / N) * 0.26;
+      var leave = 0.55 + (i / N) * 0.26;
+      var al = sm((t - appear) / 0.05) * (1 - sm((t - leave) / 0.05));
+      var dt = Math.max(0, t - leave);
+      var pp = pts(courses[i], i, s, cx, by, h);
+      for (var j = 0; j < 4; j++){ pp[j][1] -= dt * H * 0.9; pp[j][0] += Math.sin(dt * 30 + i + j) * dt * 60; }
+      P.push(pp); A.push(al); D.push(leave);
+    }
+    ctx.lineWidth = 0.9;
+    for (i = 0; i < N; i++){
+      if (A[i] < 0.01) continue;
+      var accentCourse = (i === N - 7 || i === N - 8);
+      ctx.strokeStyle = accentCourse ? acc : ink;
+      ctx.globalAlpha = A[i] * (accentCourse ? 0.95 : 0.7);
+      ctx.beginPath();
+      for (var j = 0; j < 4; j++){ var p = P[i][j]; j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
+      ctx.closePath(); ctx.stroke();
+      if (accentCourse){ ctx.globalAlpha = A[i] * 0.12; ctx.fillStyle = acc; ctx.fill(); }
+      if (i < N - 1 && A[i + 1] > 0.01){
+        ctx.strokeStyle = ink; ctx.globalAlpha = Math.min(A[i], A[i + 1]) * 0.35;
+        ctx.beginPath();
+        for (j = 0; j < 4; j++){ ctx.moveTo(P[i][j][0], P[i][j][1]); ctx.lineTo(P[i + 1][j][0], P[i + 1][j][1]); }
+        ctx.stroke();
+      }
+    }
+    // vapour leaving each course
+    ctx.fillStyle = ink;
+    for (i = 0; i < N; i++){
+      var base = pts(courses[i], i, s, cx, by, h);
+      for (var k = 0; k < 14; k++){
+        var r1 = rnd(i * 31 + k), r2 = rnd(i * 17 + k * 3 + 1), r3 = rnd(i * 7 + k * 11 + 2);
+        var d2 = t - D[i] - r2 * 0.04;
+        if (d2 < 0 || d2 > 0.2) continue;
+        var e = k % 4, a0 = base[e], a1 = base[(e + 1) % 4];
+        var x = a0[0] + (a1[0] - a0[0]) * r1 + Math.sin(d2 * 40 + k) * 8 * (d2 / 0.2);
+        var y = a0[1] + (a1[1] - a0[1]) * r1 - d2 * H * (0.8 + r3 * 1.2);
+        ctx.globalAlpha = (1 - d2 / 0.2) * 0.65;
+        ctx.fillRect(x, y, 1.4, 1.4);
+      }
+    }
+    ctx.globalAlpha = 1;
+    label(t);
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
